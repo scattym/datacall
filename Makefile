@@ -1,7 +1,8 @@
 
 
 CC =F:\\MentorGraphics\\Sourcery_CodeBench_Lite_for_ARM_GNU_Linux\\bin\\arm-none-linux-gnueabi-gcc
-CFLAGS = -c -O2
+CC =arm-linux-gnueabi-gcc
+CFLAGS = -c -O2 
 
 LD_FLAGS = -ldsi_netctrl \
     -lqdi \
@@ -50,7 +51,7 @@ $(TARGET_OBJ_DIR)/%.o:$(TEST_DIR)/%.c
 	@echo $(ALL_PATHS)
 	@echo $(ALL_INCLUDES)
 	@echo Build OBJECT $(@) from SOURCE $<
-	@$(CC) $(CFLAGS) $(ALL_INCLUDES) $(OBJ_CMD) $@ $<
+	$(CC) $(CFLAGS) $(LD_FLAGS) $(ALL_INCLUDES) $(OBJ_CMD) $@ $<
 	@echo ---------------------------------------------------------
 
 .PHONY: all clean
@@ -65,7 +66,7 @@ bin:$(BIN_OBJS)
 	@echo ---------------------------------------------------------
 	@echo $(ALL_LINKS)
 	@echo Create bin file $(BIN_NAME)
-	@$(CC) $(ALL_LINKS) -lpthread $(LD_FLAGS) $(LD_CMD)  $(TARGET_BIN_DIR)/$(BIN_NAME) $^
+	$(CC) $(ALL_LINKS) $(ALL_INCLUDES) -lpthread $(LD_CMD)  $(TARGET_BIN_DIR)/$(BIN_NAME) $^ $(LD_FLAGS)
 	@echo ---------------------------------------------------------
 	
 clean:
